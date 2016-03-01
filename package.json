@@ -32,6 +32,7 @@
     "react-dom": "0.14.0",
     "react-mixin": "3.0.0",
     "react-router": "1.0.0-rc3",
+    "react-routes": "^0.2.6",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
     "watchify": "3.4.0"
