@@ -25,6 +25,10 @@ var App = React.createClass({
     
     addFish : function(fish) {
         var timestamp = (new Date()).getTime();
+        // update the state object
+        this.state.fishes['fish-' + timestamp] = fish;
+        // set the state, pass an object of what has changed
+        this.setState({ fishes : this.state.fishes });
 },
     
     render : function() {
@@ -34,7 +38,7 @@ var App = React.createClass({
                     <Header tagline="Fresh Seafood Market" />
                 </div>
                 <Order/>
-                <Inventory/>
+                <Inventory addFish={this.addFish} />
             </div>
         )
     }
@@ -47,9 +51,9 @@ Add Product Form
 
 var AddFishForm = React.createClass({
     createFish : function(event) {
-    // stop the form from submitting
+    // 1 stop the form from submitting
         event.preventDefault();
-    // take data from the form to create object
+    // 2 take data from the form to create object
         var fish = {
             name : this.refs.name.value,
             price : this.refs.name.value,
@@ -58,7 +62,9 @@ var AddFishForm = React.createClass({
             image : this.refs.name.value,
         }
         
-    // add the product to the App State
+    // 3 add the product to the App State, pass down into </inventory> "props"
+        this.props.addFish(fish);
+        
     },
     render : function() {
         return (
@@ -120,7 +126,7 @@ var Inventory = React.createClass({
         return (
             <div>
             <h2>Inventory</h2>
-            <AddFishForm />
+            <AddFishForm {...this.props} />
             </div>
         )
     }
