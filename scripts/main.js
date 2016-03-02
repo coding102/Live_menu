@@ -16,6 +16,16 @@ var h = require('./helpers');
 */
 
 var App = React.createClass({
+    getInitialState : function() {
+        return {
+            fishes : {},
+            order : {}
+        }
+    },
+    
+    addFish : function(fish) {
+        var timestamp = (new Date()).getTime();
+},
     
     render : function() {
         return (
@@ -36,7 +46,21 @@ Add Product Form
 */
 
 var AddFishForm = React.createClass({
-    render: function() {
+    createFish : function(event) {
+    // stop the form from submitting
+        event.preventDefault();
+    // take data from the form to create object
+        var fish = {
+            name : this.refs.name.value,
+            price : this.refs.name.value,
+            status : this.refs.name.value,
+            desc : this.refs.name.value,
+            image : this.refs.name.value,
+        }
+        
+    // add the product to the App State
+    },
+    render : function() {
         return (
             <form className="fish-edit" onSubmit={this.createFish}>
                 <input type="text" ref="name" placeholder="Fish Name" />
