@@ -36,11 +36,17 @@ loadSamples : function() {
         fishes : require('./sample-fishes')
     })
 },
+    renderFish :function(key){
+        return <Fish key={key} index={key} details={this.state.fishes[key]} />
+    },
     render : function() {
         return (
             <div className="catch-of-the-day">
                 <div className="menu">
                     <Header tagline="Fresh Seafood Market" />
+                    <ul className ="list-of-fishes">
+                        {Object.keys(this.state.fishes).map(this.renderFish)}
+                    </ul>
                 </div>
                 <Order/>
                 <Inventory addFish={this.addFish} loadSamples={this.loadSamples} />
@@ -48,6 +54,27 @@ loadSamples : function() {
         )
     }
 })
+
+/*
+Fish component
+<Fish />
+*/
+
+var Fish = React.createClass({
+    render : function() {
+        var details = this.props.details;
+        return (
+            <li className="menu-fish">
+                <img src={this.props.details.image} alt={details.name} /> 
+                <h3 className="fish-name">
+                    {details.name}
+                    <span className="price">{details.price}</span>
+                </h3>
+            </li>
+        )
+    }
+})
+
 
 /*
 Add Product Form
