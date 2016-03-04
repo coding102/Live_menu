@@ -28,13 +28,23 @@ var App = React.createClass({
             order : {}
         };
     },
-    
+
     // syncing 'fishes' state to firebase backend  
     componentDidMount : function() {
         base.syncState(this.props.params.storeId + '/fishes', {
             context : this, 
             state : 'fishes'
         });     
+    
+    
+        var localStorageRef  = localStorage.getItem('order-' + this.props.params.storeId);
+    
+        if(localStorageRef) {
+            // update component state to what locaStorage has
+            this.setState({
+                order : JSON.parse(localStorageRef)
+            }); 
+        }
     },
     
     // pass new props or new state when data changes "event listener"
