@@ -22,11 +22,13 @@ var h = require('./helpers');
 var App = React.createClass({
     getInitialState : function() {
         return {
-            fishes : {},
+            // we will be syncing 'fishes' state to firebase not the 'order' 
+            fishes : {},  
             order : {}
         };
     },
     
+    // syncing 'fishes' state to firebase backend  
     componentDidMount : function() {
         base.syncState(this.props.params.storeId + '/fishes', {
             context : this, 
