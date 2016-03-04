@@ -10,6 +10,10 @@ var Navigation = ReactRouter.Navigation; // mixin
 var History = ReactRouter.History;
 var createBrowserHistory = require('history/lib/createBrowserHistory')
 
+// Firebase
+var Rebase = require('re-base');
+var base = Rebase.createClass('https://crackling-fire-7238.firebaseio.com');
+
 var h = require('./helpers');
 /*
     App "main component
