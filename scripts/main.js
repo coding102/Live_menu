@@ -15,8 +15,11 @@ var Rebase = require('re-base');
 var base = Rebase.createClass('https://crackling-fire-7238.firebaseio.com');
 
 // react catalyst allows for two way binding for nested attributes which link-state doesn't allow for
-var Catalyst = require('react-catalyst');
 var h = require('./helpers');
+
+// react catalyst allows for two way binding for nested attributes which link-state doesn't allow for
+var Catalyst = require('react-catalyst');
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -24,6 +27,7 @@ var h = require('./helpers');
     App "main component
 */
 var App = React.createClass({
+    mixins : [Catalyst.LinkedStateMixin],
     getInitialState : function() {
         return {
             // we will be syncing 'fishes' state to firebase not the 'order' 
@@ -87,7 +91,8 @@ loadSamples : function() {
                     </ul>
                 </div>
                 <Order fishes={this.state.fishes} order={this.state.order} />
-                <Inventory addFish={this.addFish} loadSamples={this.loadSamples} />
+                <Inventory addFish={this.addFish} loadSamples={this.loadSamples}
+                    fishes={this.state.fishes} linkState={this.linkState} />
             </div>
         )
     }
@@ -240,11 +245,35 @@ var Order = React.createClass({
 */
 
 var Inventory = React.createClass({
+    renderInventory : function(key) {
+        var linkState = this.props.linkState;
+        return (
+            <div className="fish-edit" key={key}>
+                <input type="text" valueLink={linkState('fishes.'+ key +'.name')}/>
+                <input type="text" valueLink={linkState('fishes.'+ key +'.price')}/>
+                
+                <select valueLink={linkState('fishes.' + key + '.status')}>
+                    <option value="unavailable">Sold Out!</option>
+                    <option value="available">Fresh!</option>
+                </select>
+        
+                <textarea valueLink={linkState('fishes.' + key + '.desc')}></textarea>
+                
+                <input type="text" valueLink={linkState('fishes.' + key +'.image')} />                  
+                
+                <button>Remove Fish</button>
+                
+            </div>
+       ) 
+    },
     render : function() {
+        
         return (
             <div>
                 <h2>Inventory</h2>
             
+                {Object.keys(this.props.fishes).map(this.renderInventory)}
+
                 <AddFishForm {...this.props} />
                 <button onClick={this.props.loadSamples}>Load Sample Fishes</button>
             </div>
