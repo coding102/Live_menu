@@ -14,12 +14,15 @@ var createBrowserHistory = require('history/lib/createBrowserHistory')
 var Rebase = require('re-base');
 var base = Rebase.createClass('https://crackling-fire-7238.firebaseio.com');
 
+// react catalyst allows for two way binding for nested attributes which link-state doesn't allow for
+var Catalyst = require('react-catalyst');
 var h = require('./helpers');
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*
     App "main component
 */
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
 var App = React.createClass({
     getInitialState : function() {
         return {
