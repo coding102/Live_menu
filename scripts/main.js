@@ -65,6 +65,13 @@ var App = React.createClass({
         this.setState({ order : this.state.order });
     },
     
+    removeFromOrder : function(key) {
+         delete this.state.order[key];
+        this.setState({
+            order : this.state.order
+        });
+    },
+    
     addFish : function(fish) {
         var timestamp = (new Date()).getTime();
         // update the state object
@@ -101,7 +108,7 @@ loadSamples : function() {
                         {Object.keys(this.state.fishes).map(this.renderFish)}
                     </ul>
                 </div>
-                <Order fishes={this.state.fishes} order={this.state.order} />
+                <Order fishes={this.state.fishes} order={this.state.order} removeFromOrder={this.removeFromOrder} />
                 <Inventory addFish={this.addFish} loadSamples={this.loadSamples}
                     fishes={this.state.fishes} linkState={this.linkState} removeFish={this.removeFish} />
             </div>
