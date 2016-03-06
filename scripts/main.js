@@ -205,6 +205,9 @@ var Header = React.createClass({
             <h3 className="tagline"><span>{this.props.tagline}</span></h3>
             </header>
         )
+    },
+    propTypes : {
+        tagline : React.PropTypes.string.isRequired
     }
 })
 
