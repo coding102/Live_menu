@@ -1,15 +1,12 @@
-var React = require('react');
-var ReactDOM  = require('react-dom');
+import React from 'react';
+import ReactDOM from 'react-dom';
 /*routing*/
 
-var ReactRouter = require('react-router'); 
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
+import { Router, Route } from 'react-router';
 
-var createBrowserHistory = require('history/lib/createBrowserHistory')
-
+//var createBrowserHistory = require('history/lib/createBrowserHistory')
+import { createHistory } from 'history';
 // react catalyst allows for two way binding for nested attributes which link-state doesn't allow for
-var h = require('./helpers');
 
 /*
     Import Components
@@ -26,12 +23,11 @@ import App from './components/App';
 */
 
 var routes = (
-    <Router history={createBrowserHistory()}>
+    <Router history={createHistory()}>
         <Route path="/" component={StorePicker}/>
         <Route path="/store/:storeId" component={App}/>
         <Route path="*" component={NotFound}/> 
     </Router>
 )
-
 
 ReactDOM.render(routes, document.querySelector('#main'));
