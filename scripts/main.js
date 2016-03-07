@@ -20,6 +20,10 @@ var h = require('./helpers');
 // react catalyst allows for two way binding for nested attributes which link-state doesn't allow for
 var Catalyst = require('react-catalyst');
 
+/*
+    Import Components
+*/
+import NotFound from './components/NotFound' ;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -348,18 +352,6 @@ var StorePicker  =React.createClass({
     
 });
 
-
-/*
-    Page not found component
-*/
-
-var Notfound = React.createClass({
-    render : function() {
-        return <h1>Not Found!</h1>
-    }
-});
-
-
 /*
     Routes
 */
@@ -368,7 +360,7 @@ var routes = (
     <Router history={createBrowserHistory()}>
         <Route path="/" component={StorePicker}/>
         <Route path="/store/:storeId" component={App}/>
-        <Route path="*" component={Notfound}/> 
+        <Route path="*" component={NotFound}/> 
     </Router>
 )
 
