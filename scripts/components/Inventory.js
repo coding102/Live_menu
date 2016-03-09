@@ -27,11 +27,30 @@ authenticate(provider) {
     ref.authWithOAuthPopup(provider, this.authHandler);
 }
 
+componentWillMount() {
+    console.log("checking to see if we can log them in");
+    var token = localStorage.getItem('token');
+    if(token) {
+        ref.authWithCustomToken(token,this.authHandler);
+    }
+}    
+
+logout () {
+    ref.unauth();
+    localStorage.removeItem('token');
+    this.setState({
+        uid : null
+    });
+}    
+    
 authHandler(err, authData) {
     if(err) {
         console.err(err);
         return;
     }
+    
+    // save the login token in the browser
+    localStorage.setItem('token', authData.token);
     
     const storeRef = ref.child(this.props.params.storeId);
     storeRef.on('value', (snapshot)=> {
@@ -86,7 +105,7 @@ renderLogin () {
 
   render() {
     // store button in variable to easily call on later
-    let logoutButton = <button>Log Out!</button>  
+    let logoutButton = <button onClick={this.logout}>Log Out!</button>  
     // check if they aren't logged in
     if(!this.state.uid) {
         return (
