@@ -7,6 +7,7 @@ import React from 'react';
 import AddFishForm from './AddFishForm';
 import autobind from 'autobind-decorator';
 import Firebase from 'firebase';
+// const = variable that cannot be overwritten
 const ref = new Firebase('https://crackling-fire-7238.firebaseio.com/');
 
 @autobind
@@ -20,13 +21,45 @@ class Inventory extends React.Component {
     }
 }
 
+// build authenticate method for line 32,33
+authenticate(provider) {
+    console.log("trying to " + provider);
+    ref.authWithOAuthPopup(provider, this.authHandler);
+}
+
+authHandler(err, authData) {
+    if(err) {
+        console.err(err);
+        return;
+    }
+    
+    const storeRef = ref.child(this.props.params.storeId);
+    storeRef.on('value', (snapshot)=> {
+        var data = snapshot.val() || {};
+        
+        if(!data.owner) {
+            // claim store as your own if no owner exists for it
+            storeRef.set({
+                owner : authData.uid
+            });
+        }
+        
+        // update our state to reflect the current store owner/user
+        this.setState({
+            uid : authData.uid,
+            owner : data.owner || authData.uid
+            
+        })
+    });
+}    
+    
 renderLogin () {
     return (
     <nav className="login">
         <h2>Inventory</h2>
         <p>Sign in to manage your store's inventory</p>
-        <button className="github">Log In with Github</button>
-        <button className="facebook">Log In with Facebook</button>
+        <button className="github" onClick={this.authenticate.bind(this, 'github')}>Log In with Github</button>
+        <button className="facebook" onClick={this.authenticate.bind(this, 'facebook')}>>Log In with Facebook</button>
     </nav>
     )
 }

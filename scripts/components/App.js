@@ -101,7 +101,7 @@ loadSamples : function() {
                 </div>
                 <Order fishes={this.state.fishes} order={this.state.order} removeFromOrder={this.removeFromOrder} />
                 <Inventory addFish={this.addFish} loadSamples={this.loadSamples}
-                    fishes={this.state.fishes} linkState={this.linkState} removeFish={this.removeFish} />
+                    fishes={this.state.fishes} linkState={this.linkState} removeFish={this.removeFish} {...this.props} />
             </div>
         )
     }
