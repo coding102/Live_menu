@@ -5,6 +5,17 @@
 import React from 'react' ;
 import AddFishForm from './AddFishForm';
 
+renderLogin() {
+    return (
+    <nav className="login">
+        <h2>Inventory</h2>
+        <p>Sign in to manage your store's inventory</p>
+        <button className="github">Log In with Github</button>
+        <button className="Facebook">Log In with Facebook</button>
+    </nav>
+    )
+}
+
 var Inventory = React.createClass({
     renderInventory : function(key) {
         var linkState = this.props.linkState;
